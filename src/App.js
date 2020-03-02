@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from "react"
+
+import Network from "./Network"
+import NetworkSelect from "./NetworkSelect"
+import NetworkInfo from "./NetworkInfo"
+import Trustline from "./Trustline"
+import Account from "./Account"
+
+import "bulma/css/bulma.css"
+import "./App.css"
 
 function App() {
+  const [network, setNetwork] = useState(null)
+  const [trustline, setTrustline] = useState(null)
+  const [account, setAccount] = useState(null)
+
+  const handleSelectNetwork = useCallback(network => {
+    setTrustline(null)
+    setAccount(null)
+    setNetwork(network)
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={"mycontainer columns"}>
+      <div className={"column is-one-quarter"}>
+        <NetworkSelect onNetworkSelect={handleSelectNetwork} />
+      </div>
+      <div className={"column is-one-half"}>
+        {network && <NetworkInfo network={network} />}
+        {network ? (
+          <Network
+            address={network.address}
+            onSelectTrustline={setTrustline}
+            onSelectAccount={setAccount}
+          />
+        ) : (
+          <div className={"has-text-centered"}>Select a network</div>
+        )}
+      </div>
+      <div className={"column is-one-quarter"}>
+        {trustline ? (
+          <Trustline
+            network={network}
+            from={trustline.from}
+            to={trustline.to}
+          />
+        ) : (
+          <div className={"has-text-centered"}>Select a trustline</div>
+        )}
+        <br />
+        <br />
+        {account ? (
+          <Account network={network} address={account} />
+        ) : (
+          <div className={"has-text-centered"}>Select an account</div>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

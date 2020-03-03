@@ -22,10 +22,8 @@ function App() {
 
   return (
     <div className={"mycontainer columns"}>
-      <div className={"column is-one-quarter"}>
-        <NetworkSelect onNetworkSelect={handleSelectNetwork} />
-      </div>
-      <div className={"column is-one-half"}>
+      <NetworkSelect onNetworkSelect={handleSelectNetwork} />
+      <div className={"column is-three-quarter"}>
         {network && <NetworkInfo network={network} />}
         {network ? (
           <Network

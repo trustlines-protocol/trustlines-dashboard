@@ -19,6 +19,8 @@ function NetworkSelect({ onNetworkSelect }) {
       setNetworks(networks)
     }
     _fetch()
+    const id = setInterval(_fetch, 10000)
+    return () => clearInterval(id)
   }, [])
 
   const selectNetwork = useCallback(

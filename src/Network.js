@@ -5,6 +5,9 @@ import { fetch_endpoint } from "./api.js"
 
 import "./Network.css"
 import NetworkInfo from "./NetworkInfo"
+import DiffTime from "./DiffTime"
+
+const UPDATE_INTERVAL = 5000
 
 function filterEvents(eventList, eventName2list) {
   const result = {}
@@ -34,7 +37,11 @@ function build_graph(trustlineUpdateEvents) {
       ;[address1, address2] = [address2, address1]
     }
 
-    edges[[address1, address2]] = { from: address1, to: address2 }
+    edges[[address1, address2]] = {
+      id: address1 + address2,
+      from: address1,
+      to: address2,
+    }
   }
   const vis_nodes = []
   const vis_edges = []
@@ -64,6 +71,8 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
   const [numTransfers, setNumTransfers] = useState(null)
   const [numUsers, setNumUsers] = useState(null)
 
+  const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState(null)
+
   useEffect(function initVisNetwork() {
     setVisNetwork(new vis.Network(container.current, {}, options))
   }, [])
@@ -77,7 +86,6 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
       visNetwork.off("deselectEdge")
       visNetwork.off("deselectNode")
       visNetwork.off("stabilizationProgress")
-      visNetwork.off("stabilizationIterationsDone")
       visNetwork.on("selectEdge", params => {
         if (params.edges.length !== 1 || params.nodes.length !== 0) {
           return
@@ -105,42 +113,84 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
       visNetwork.on("stabilizationProgress", params => {
         setLoadingPercent(Math.floor((params.iterations / params.total) * 100))
       })
-      visNetwork.on("stabilizationProgress", params => {
-        setLoadingPercent(Math.floor((params.iterations / params.total) * 100))
-      })
-      visNetwork.on("stabilizationIterationsDone", params => {
-        setLoadingPercent(100)
-      })
     },
     [network, visNetwork, onSelectAccount, onSelectTrustline]
   )
 
   useEffect(
     function fetchData() {
-      async function _fetch() {
-        if (!visNetwork) return
-        visNetwork.setData({})
-        setLoadingPercent(0)
+      if (!visNetwork) return
+      console.log("Init fetch")
+      visNetwork.setData({})
+      setLoadingPercent(0)
+      setNumTransfers(0)
+      setNumUsers(0)
+      let nodeSet = null
+      let edgeSet = null
+      let finishedLoading = true
 
-        const events = await fetch_endpoint(
-          process.env.REACT_APP_RELAY_URL +
-            `/api/v1/networks/${network.address}/events`
-        )
-        const eventMap = filterEvents(events, {
-          TrustlineUpdate: "trustlineUpdateEvents",
-          Transfer: "transferEvents",
-        })
-        const [nodes, edges] = build_graph(eventMap.trustlineUpdateEvents)
-        const data = {
-          nodes: new vis.DataSet(nodes),
-          edges: new vis.DataSet(edges),
+      function startFetchData() {
+        let fromBlock = 0
+
+        async function _fetchMoreData() {
+          if (!finishedLoading) {
+            console.log("Skip fetching, because old still in progress")
+            return
+          }
+          finishedLoading = false
+          console.log("Fetch events from block ", fromBlock)
+          let events = await fetch_endpoint(
+            process.env.REACT_APP_RELAY_URL +
+              `/api/v1/networks/${network.address}/events?fromBlock=${fromBlock}`
+          )
+
+          if (events.length === 0) {
+            console.log("No new events")
+            setLastUpdateTimestamp(Date.now())
+            finishedLoading = true
+            return
+          }
+          const eventMap = filterEvents(events, {
+            TrustlineUpdate: "trustlineUpdateEvents",
+            Transfer: "transferEvents",
+          })
+          const [nodes, edges] = build_graph(eventMap.trustlineUpdateEvents)
+
+          if (nodeSet == null) {
+            console.log("Init network data")
+            nodeSet = new vis.DataSet(nodes)
+            edgeSet = new vis.DataSet(edges)
+            const data = {
+              nodes: nodeSet,
+              edges: edgeSet,
+            }
+            visNetwork.setData(data)
+            visNetwork.once("stabilizationIterationsDone", params => {
+              finishedLoading = true
+              setLoadingPercent(100)
+            })
+          } else {
+            console.log("Update network data")
+            nodeSet.update(nodes)
+            edgeSet.update(edges)
+            finishedLoading = true
+          }
+
+          setNumTransfers(
+            numTransfers => numTransfers + eventMap.transferEvents.length
+          )
+          setNumUsers(nodeSet.length)
+          setLastUpdateTimestamp(Date.now())
+          fromBlock = events[events.length - 1].blockNumber + 1
         }
-        visNetwork.setData(data)
-        setNumTransfers(eventMap.transferEvents.length)
-        setNumUsers(nodes.length)
+
+        _fetchMoreData()
+        return setInterval(_fetchMoreData, UPDATE_INTERVAL)
       }
 
-      _fetch()
+      const intervalId = startFetchData()
+
+      return () => clearInterval(intervalId)
     },
     [visNetwork, network]
   )
@@ -152,6 +202,7 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
         numUsers={numUsers}
         numTransfers={numTransfers}
       />
+      last updated: <DiffTime timestamp={lastUpdateTimestamp} />
       {loadingPercent !== 100 && (
         <progress
           className="progress my-progress is-info"
@@ -161,7 +212,7 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
           {loadingPercent}%
         </progress>
       )}
-      <div style={{ width: "100%", height: "100%" }} ref={container} />
+      <div style={{ width: "100%", height: "90%" }} ref={container} />
     </div>
   )
 }

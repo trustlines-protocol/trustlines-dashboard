@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react"
+import moment from "moment"
 
 import Network from "./Network"
 import NetworkSelect from "./NetworkSelect"
@@ -7,6 +8,8 @@ import Account from "./Account"
 
 import "bulma/css/bulma.css"
 import "./App.css"
+
+moment.relativeTimeThreshold("ss", 10)
 
 function App() {
   const [network, setNetwork] = useState(null)

@@ -1,12 +1,14 @@
 import React from "react"
 
-function NetworkInfo({ network }) {
+function NetworkInfo({ networkStatic, numUsers, numTransfers }) {
   return (
     <div>
       <div className={"title"}>
-        {network.name} ({network.abbreviation})
+        {networkStatic.name} ({networkStatic.abbreviation})
       </div>
-      <div className={"subtitle"}>{network.numUsers} Users</div>
+      <div className={"subtitle"}>
+        {numUsers} Users, {numTransfers} Transfers
+      </div>
     </div>
   )
 }

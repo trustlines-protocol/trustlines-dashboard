@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react"
 
 import Network from "./Network"
 import NetworkSelect from "./NetworkSelect"
-import NetworkInfo from "./NetworkInfo"
 import Trustline from "./Trustline"
 import Account from "./Account"
 
@@ -26,10 +25,9 @@ function App() {
         <NetworkSelect onNetworkSelect={handleSelectNetwork} />
       </div>
       <div className={"column is-three-quarter"}>
-        {network && <NetworkInfo network={network} />}
         {network ? (
           <Network
-            address={network.address}
+            network={network}
             onSelectTrustline={setTrustline}
             onSelectAccount={setAccount}
           />

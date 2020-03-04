@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/trustlines-dashboard/static/css/main.a79d7b61.chunk.css",
-    "main.js": "/trustlines-dashboard/static/js/main.006dc72a.chunk.js",
-    "main.js.map": "/trustlines-dashboard/static/js/main.006dc72a.chunk.js.map",
+    "main.css": "/trustlines-dashboard/static/css/main.6b0635ea.chunk.css",
+    "main.js": "/trustlines-dashboard/static/js/main.754f1a47.chunk.js",
+    "main.js.map": "/trustlines-dashboard/static/js/main.754f1a47.chunk.js.map",
     "runtime-main.js": "/trustlines-dashboard/static/js/runtime-main.7c9d6c8a.js",
     "runtime-main.js.map": "/trustlines-dashboard/static/js/runtime-main.7c9d6c8a.js.map",
     "static/css/2.70d9d258.chunk.css": "/trustlines-dashboard/static/css/2.70d9d258.chunk.css",
-    "static/js/2.2ffebf1d.chunk.js": "/trustlines-dashboard/static/js/2.2ffebf1d.chunk.js",
-    "static/js/2.2ffebf1d.chunk.js.map": "/trustlines-dashboard/static/js/2.2ffebf1d.chunk.js.map",
+    "static/js/2.748ea7ab.chunk.js": "/trustlines-dashboard/static/js/2.748ea7ab.chunk.js",
+    "static/js/2.748ea7ab.chunk.js.map": "/trustlines-dashboard/static/js/2.748ea7ab.chunk.js.map",
     "index.html": "/trustlines-dashboard/index.html",
-    "precache-manifest.fdd0e618dde0c795a352902cd794fe6f.js": "/trustlines-dashboard/precache-manifest.fdd0e618dde0c795a352902cd794fe6f.js",
+    "precache-manifest.975e15532fc0d39f1daf56bff12aaeb8.js": "/trustlines-dashboard/precache-manifest.975e15532fc0d39f1daf56bff12aaeb8.js",
     "service-worker.js": "/trustlines-dashboard/service-worker.js",
     "static/css/2.70d9d258.chunk.css.map": "/trustlines-dashboard/static/css/2.70d9d258.chunk.css.map",
-    "static/css/main.a79d7b61.chunk.css.map": "/trustlines-dashboard/static/css/main.a79d7b61.chunk.css.map",
-    "static/js/2.2ffebf1d.chunk.js.LICENSE.txt": "/trustlines-dashboard/static/js/2.2ffebf1d.chunk.js.LICENSE.txt"
+    "static/css/main.6b0635ea.chunk.css.map": "/trustlines-dashboard/static/css/main.6b0635ea.chunk.css.map",
+    "static/js/2.748ea7ab.chunk.js.LICENSE.txt": "/trustlines-dashboard/static/js/2.748ea7ab.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7c9d6c8a.js",
     "static/css/2.70d9d258.chunk.css",
-    "static/js/2.2ffebf1d.chunk.js",
-    "static/css/main.a79d7b61.chunk.css",
-    "static/js/main.006dc72a.chunk.js"
+    "static/js/2.748ea7ab.chunk.js",
+    "static/css/main.6b0635ea.chunk.css",
+    "static/js/main.754f1a47.chunk.js"
   ]
 }

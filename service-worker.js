@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/trustlines-dashboard/precache-manifest.fdd0e618dde0c795a352902cd794fe6f.js"
+  "/trustlines-dashboard/precache-manifest.975e15532fc0d39f1daf56bff12aaeb8.js"
 );
 
 self.addEventListener('message', (event) => {

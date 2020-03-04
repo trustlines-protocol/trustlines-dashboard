@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { fetch_endpoint } from "./api.js"
 
@@ -21,7 +21,8 @@ function NetworkSelect({ onNetworkSelect }) {
     _fetch()
   }, [])
 
-  const selectNetwork = useCallback((network) => {
+  const selectNetwork = useCallback(
+    network => {
       setSelectedAddress(network.address)
       onNetworkSelect(network)
     },

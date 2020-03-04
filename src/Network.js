@@ -3,6 +3,8 @@ import vis from "vis-network"
 
 import { fetch_endpoint } from "./api.js"
 
+import "./Network.css"
+
 function build_graph(event_list) {
   const nodes = new Set()
   const edges = {}
@@ -44,38 +46,28 @@ const options = {
 
 function Network({ address, onSelectTrustline, onSelectAccount }) {
   const container = useRef(null)
-  const [loading, setLoading] = useState(true)
+  const [loadingPercent, setLoadingPercent] = useState(0)
   const [network, setNetwork] = useState(null)
 
-  useEffect(() => {
-    async function _fetch() {
-      network && network.setData({})
-      setLoading(true)
-      const events = await fetch_endpoint(
-        process.env.REACT_APP_RELAY_URL + `/api/v1/networks/${address}/events`
-      )
-      const [nodes, edges] = build_graph(events)
-      const data = {
-        nodes: new vis.DataSet(nodes),
-        edges: new vis.DataSet(edges),
-      }
-      let new_network
-      if (network) {
-        network.setData(data)
-        new_network = network
-      } else {
-        new_network = new vis.Network(container.current, data, options)
-        setNetwork(new_network)
-      }
-      new_network.off("selectEdge")
-      new_network.off("selectNode")
-      new_network.off("deselectEdge")
-      new_network.off("deselectNode")
-      new_network.on("selectEdge", function(params) {
+  useEffect(function initVisNetwork() {
+    setNetwork(new vis.Network(container.current, {}, options))
+  }, [])
+
+  useEffect(
+    function setListener() {
+      if (!network) return
+
+      network.off("selectEdge")
+      network.off("selectNode")
+      network.off("deselectEdge")
+      network.off("deselectNode")
+      network.off("stabilizationProgress")
+      network.off("stabilizationIterationsDone")
+      network.on("selectEdge", params => {
         if (params.edges.length !== 1 || params.nodes.length !== 0) {
           return
         }
-        const tl_data = data.edges.get(params.edges[0])
+        const tl_data = network.body.data.edges.get(params.edges[0])
         const trustline = {
           network: address,
           from: tl_data["from"],
@@ -83,27 +75,65 @@ function Network({ address, onSelectTrustline, onSelectAccount }) {
         }
         onSelectTrustline(trustline)
       })
-      new_network.on("selectNode", function(params) {
+      network.on("selectNode", params => {
         if (params.nodes.length !== 1) {
           return
         }
         onSelectAccount(params.nodes[0])
       })
-      new_network.on("deselectEdge", function(params) {
+      network.on("deselectEdge", params => {
         onSelectTrustline(null)
       })
-      new_network.on("deselectNode", function(params) {
+      network.on("deselectNode", params => {
         onSelectAccount(null)
       })
-      setLoading(false)
-    }
+      network.on("stabilizationProgress", params => {
+        setLoadingPercent(Math.floor((params.iterations / params.total) * 100))
+      })
+      network.on("stabilizationProgress", params => {
+        setLoadingPercent(Math.floor((params.iterations / params.total) * 100))
+      })
+      network.on("stabilizationIterationsDone", params => {
+        setLoadingPercent(100)
+      })
+    },
+    [address, network, onSelectAccount, onSelectTrustline]
+  )
 
-    _fetch()
-  }, [network, address, onSelectTrustline, onSelectAccount])
+  useEffect(
+    function fetchData() {
+      async function _fetch() {
+        if (!network) return
+        network.setData({})
+        setLoadingPercent(0)
+
+        const events = await fetch_endpoint(
+          process.env.REACT_APP_RELAY_URL + `/api/v1/networks/${address}/events`
+        )
+        const [nodes, edges] = build_graph(events)
+        const data = {
+          nodes: new vis.DataSet(nodes),
+          edges: new vis.DataSet(edges),
+        }
+        network.setData(data)
+      }
+
+      _fetch()
+    },
+    [network, address]
+  )
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      {loading && <div className={"has-text-centered"}>loading...</div>}
+      {loadingPercent !== 100 && (
+        <progress
+          className="progress my-progress is-info"
+          value={loadingPercent}
+          max="100"
+        >
+          {loadingPercent}%
+        </progress>
+      )}
       <div style={{ width: "100%", height: "100%" }} ref={container} />
     </div>
   )

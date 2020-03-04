@@ -22,7 +22,9 @@ function App() {
 
   return (
     <div className={"mycontainer columns"}>
-      <NetworkSelect onNetworkSelect={handleSelectNetwork} />
+      <div className={"column is-narrow"}>
+        <NetworkSelect onNetworkSelect={handleSelectNetwork} />
+      </div>
       <div className={"column is-three-quarter"}>
         {network && <NetworkInfo network={network} />}
         {network ? (

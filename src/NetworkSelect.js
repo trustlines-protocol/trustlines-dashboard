@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import { fetch_endpoint } from "./api.js"
 
 import "./NetworkSelect.css"
+import { frozenNetworks } from "./frozenNetworks";
 
 function NetworkSelect({ onNetworkSelect }) {
   const [networks, setNetworks] = useState([])
@@ -10,9 +11,12 @@ function NetworkSelect({ onNetworkSelect }) {
 
   useEffect(() => {
     async function _fetch() {
-      const networks = await fetch_endpoint(
+      let networks = await fetch_endpoint(
         process.env.REACT_APP_RELAY_URL + `/api/v1/networks`
       )
+
+      networks = networks.filter(network => !frozenNetworks.includes(network.address))
+
       networks.sort(
         (networkA, networkB) => networkB.numUsers - networkA.numUsers
       )

@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "00b03058054f3e6dfa01cebdbdd8ab62",
+    "revision": "4995e9dd15a80ca1a84fac5495d22c82",
     "url": "/trustlines-dashboard/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/trustlines-dashboard/static/css/2.70d9d258.chunk.css"
   },
   {
-    "revision": "d8d7470ced9d7e9894ff",
+    "revision": "9210ca3bb9012e4f4f29",
     "url": "/trustlines-dashboard/static/css/main.a7e63d02.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/trustlines-dashboard/static/js/2.93b199b5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d8d7470ced9d7e9894ff",
-    "url": "/trustlines-dashboard/static/js/main.b7e6d651.chunk.js"
+    "revision": "9210ca3bb9012e4f4f29",
+    "url": "/trustlines-dashboard/static/js/main.72accf83.chunk.js"
   },
   {
     "revision": "26657ab2ed26d4ab447f",

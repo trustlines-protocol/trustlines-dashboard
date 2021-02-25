@@ -120,14 +120,14 @@ export function chart(
       // Highlight the connections
       links
         .style("stroke", function (link_d) {
-          return link_d.source === d.id ||
-            link_d.target === d.id
+          return link_d.__proto__.source === d.id ||
+            link_d.__proto__.target === d.id
             ? "#69b3b2"
             : "#b8b8b8"
         })
         .style("stroke-width", function (link_d) {
-          return link_d.source === d.id ||
-            link_d.target === d.id
+          return link_d.__proto__.source === d.id ||
+            link_d.__proto__.target === d.id
             ? 2
             : 1
         })

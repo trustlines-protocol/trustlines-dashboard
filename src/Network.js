@@ -125,7 +125,7 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
   }, [graph, network, onSelectTrustline, onSelectAccount])
 
   return (
-    <div>
+    <div style={{height: "90%"}}>
       <div style={{minHeight: "100px"}}>
         {loadingPercent !== 100 ? (
             "Loading..."

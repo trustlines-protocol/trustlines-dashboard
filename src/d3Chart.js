@@ -98,7 +98,7 @@ export function chart(
   nodes.on("click", (d, i) => {
     selectedNodeId = data.nodes[i.index].id
     nodes.style("fill", (link_d) => {
-      return link_d.__proto__.id === selectedNodeId ? "red" : "#b8b8b8"
+      return link_d.id === selectedNodeId ? "red" : "#b8b8b8"
     })
 
     onSelectAccount(selectedNodeId)
@@ -114,20 +114,20 @@ export function chart(
         if (selectedNodeId === null) {
           return "#B8B8B8"
         }
-        return nodeId.__proto__.id === selectedNodeId ? "red" : "#B8B8B8"
+        return nodeId.id === selectedNodeId ? "red" : "#B8B8B8"
       })
       d3.select(this).style("fill", "#69b3b2")
       // Highlight the connections
       links
         .style("stroke", function (link_d) {
-          return link_d.__proto__.source === d.id ||
-            link_d.__proto__.target === d.id
+          return link_d.source === d.id ||
+            link_d.target === d.id
             ? "#69b3b2"
             : "#b8b8b8"
         })
         .style("stroke-width", function (link_d) {
-          return link_d.__proto__.source === d.id ||
-            link_d.__proto__.target === d.id
+          return link_d.source === d.id ||
+            link_d.target === d.id
             ? 2
             : 1
         })
@@ -140,11 +140,11 @@ export function chart(
         if (selectedNodeId === null) {
           return "#69b3b2"
         }
-        return nodeId.__proto__.id === selectedNodeId ? "red" : "#69b3b2"
+        return nodeId.id === selectedNodeId ? "red" : "#69b3b2"
       })
       links
         .style("stroke", (link_d) => {
-          return selectedLinkId === link_d.__proto__.id ? "red" : "black"
+          return selectedLinkId === link_d.id ? "red" : "black"
         })
         .style("stroke-width", "1")
     })
@@ -159,7 +159,7 @@ export function chart(
     }
 
     links.style("stroke", (link_d) => {
-      return selectedLinkId === link_d.__proto__.id ? "red" : "black"
+      return selectedLinkId === link_d.id ? "red" : "black"
     })
 
     onSelectTrustline(trustline)

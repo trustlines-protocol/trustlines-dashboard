@@ -126,19 +126,21 @@ function Network({ network, onSelectTrustline, onSelectAccount }) {
 
   return (
     <div>
-      {loadingPercent !== 100 ? (
-        "Loading..."
-      ) : (
-        <>
-          <NetworkInfo
-            networkStatic={network}
-            numUsers={numUsers}
-            numTransfers={numTransfers}
-          />
-          last updated: <DiffTime timestamp={lastUpdateTimestamp} />{" "}
-          <a onClick={() => fetchData()}>Click here to update.</a>
-        </>
-      )}
+      <div style={{minHeight: "100px"}}>
+        {loadingPercent !== 100 ? (
+            "Loading..."
+        ) : (
+            <>
+              <NetworkInfo
+                  networkStatic={network}
+                  numUsers={numUsers}
+                  numTransfers={numTransfers}
+              />
+              last updated: <DiffTime timestamp={lastUpdateTimestamp} />{" "}
+              <a onClick={() => fetchData()}>Click here to update.</a>
+            </>
+        )}
+      </div>
       <div style={{ width: "100%", height: "100%" }} id="svgContainer"></div>
     </div>
   )

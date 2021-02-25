@@ -16,7 +16,7 @@ function App() {
   const [trustline, setTrustline] = useState(null)
   const [account, setAccount] = useState(null)
 
-  const handleSelectNetwork = useCallback(network => {
+  const handleSelectNetwork = useCallback((network) => {
     setTrustline(null)
     setAccount(null)
     setNetwork(network)

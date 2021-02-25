@@ -9,14 +9,14 @@
     "@testing-library/user-event": "^7.1.2",
     "bignumber.js": "^9.0.0",
     "bulma": "^0.8.0",
+    "d3": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.2",
     "gh-pages": "^2.2.0",
     "moment": "^2.24.0",
-    "prettier": "^1.19.1",
+    "prettier": "2.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0",
-    "vis-network": "^7.3.6"
+    "react-scripts": "3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

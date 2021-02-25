@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/trustlines-dashboard/static/css/main.a7e63d02.chunk.css",
-    "main.js": "/trustlines-dashboard/static/js/main.72accf83.chunk.js",
-    "main.js.map": "/trustlines-dashboard/static/js/main.72accf83.chunk.js.map",
+    "main.js": "/trustlines-dashboard/static/js/main.ea2ec480.chunk.js",
+    "main.js.map": "/trustlines-dashboard/static/js/main.ea2ec480.chunk.js.map",
     "runtime-main.js": "/trustlines-dashboard/static/js/runtime-main.7c9d6c8a.js",
     "runtime-main.js.map": "/trustlines-dashboard/static/js/runtime-main.7c9d6c8a.js.map",
     "static/css/2.70d9d258.chunk.css": "/trustlines-dashboard/static/css/2.70d9d258.chunk.css",
     "static/js/2.93b199b5.chunk.js": "/trustlines-dashboard/static/js/2.93b199b5.chunk.js",
     "static/js/2.93b199b5.chunk.js.map": "/trustlines-dashboard/static/js/2.93b199b5.chunk.js.map",
     "index.html": "/trustlines-dashboard/index.html",
-    "precache-manifest.ee18cf461b4f3882629e460d0c71c958.js": "/trustlines-dashboard/precache-manifest.ee18cf461b4f3882629e460d0c71c958.js",
+    "precache-manifest.a307fad8dd9d486c320cf1a321ab02a5.js": "/trustlines-dashboard/precache-manifest.a307fad8dd9d486c320cf1a321ab02a5.js",
     "service-worker.js": "/trustlines-dashboard/service-worker.js",
     "static/css/2.70d9d258.chunk.css.map": "/trustlines-dashboard/static/css/2.70d9d258.chunk.css.map",
     "static/css/main.a7e63d02.chunk.css.map": "/trustlines-dashboard/static/css/main.a7e63d02.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.70d9d258.chunk.css",
     "static/js/2.93b199b5.chunk.js",
     "static/css/main.a7e63d02.chunk.css",
-    "static/js/main.72accf83.chunk.js"
+    "static/js/main.ea2ec480.chunk.js"
   ]
 }

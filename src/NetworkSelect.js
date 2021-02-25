@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import { fetch_endpoint } from "./api.js"
 
 import "./NetworkSelect.css"
-import { frozenNetworks } from "./frozenNetworks";
+import { frozenNetworks } from "./frozenNetworks"
 
 function NetworkSelect({ onNetworkSelect }) {
   const [networks, setNetworks] = useState([])
@@ -15,7 +15,9 @@ function NetworkSelect({ onNetworkSelect }) {
         process.env.REACT_APP_RELAY_URL + `/api/v1/networks`
       )
 
-      networks = networks.filter(network => !frozenNetworks.includes(network.address))
+      networks = networks.filter(
+        (network) => !frozenNetworks.includes(network.address)
+      )
 
       networks.sort(
         (networkA, networkB) => networkB.numUsers - networkA.numUsers
@@ -28,7 +30,7 @@ function NetworkSelect({ onNetworkSelect }) {
   }, [])
 
   const selectNetwork = useCallback(
-    network => {
+    (network) => {
       setSelectedAddress(network.address)
       onNetworkSelect(network)
     },
@@ -39,7 +41,7 @@ function NetworkSelect({ onNetworkSelect }) {
     <aside className={"menu my-menu"}>
       <p className={"menu-label"}>Networks</p>
       <ul>
-        {networks.map(network => (
+        {networks.map((network) => (
           <li key={network.address}>
             <a
               onClick={() => selectNetwork(network)}
